@@ -17,9 +17,9 @@
             white-space: normal; widows: auto; word-spacing: 0px;
             -webkit-text-stroke-width: 0px; display: inline !important;
             float: none; background-color: rgb(255, 255, 255);">Write a
-            method to build a tree from the right parenthetic string
+            method to build a tree from the left parenthetic string
             representation (return the root node of the tree) and a
-            method to construct the left parenthetic string
+            method to construct the right parenthetic string
             representation of a tree represented by the root node<span
               class="Apple-converted-space">&nbsp;</span></span><code
             style="margin: 0px; padding: 0px; font-style: normal;
@@ -45,7 +45,7 @@
             letter-spacing: normal; orphans: auto; text-align: left;
             text-indent: 0px; text-transform: none; white-space: normal;
             widows: auto; word-spacing: 0px; -webkit-text-stroke-width:
-            0px; background-color: rgb(255, 255, 255);">Node</code><span
+            0px; background-color: rgb(255, 255, 255);">TreeNode</code><span
             style="color: rgb(34, 34, 34); font-family: Verdana, Arial,
             sans-serif; font-size: small; font-style: normal;
             font-variant: normal; font-weight: normal; letter-spacing:
@@ -84,7 +84,7 @@
             text-align: left; text-indent: 0px; text-transform: none;
             white-space: normal; widows: auto; word-spacing: 0px;
             -webkit-text-stroke-width: 0px; background-color: rgb(255,
-            255, 255);">parsePostfix</code><span style="color: rgb(34,
+            255, 255);">parsePrefix</code><span style="color: rgb(34,
             34, 34); font-family: Verdana, Arial, sans-serif; font-size:
             small; font-style: normal; font-variant: normal;
             font-weight: normal; letter-spacing: normal; line-height:
@@ -135,7 +135,7 @@
             text-indent: 0px; text-transform: none; white-space: normal;
             widows: auto; word-spacing: 0px; -webkit-text-stroke-width:
             0px; background-color: rgb(255, 255, 255);">public static
-            Node parsePostfix (String s)</code><span style="color:
+            TreeNode parsePrefix (String s)</code><span style="color:
             rgb(34, 34, 34); font-family: Verdana, Arial, sans-serif;
             font-size: small; font-style: normal; font-variant: normal;
             font-weight: normal; letter-spacing: normal; line-height:
@@ -160,7 +160,7 @@
             text-indent: 0px; text-transform: none; white-space: normal;
             widows: auto; word-spacing: 0px; -webkit-text-stroke-width:
             0px; background-color: rgb(255, 255, 255);">public String
-            leftParentheticRepresentation()</code><span style="color:
+            rightParentheticRepresentation()</code><span style="color:
             rgb(34, 34, 34); font-family: Verdana, Arial, sans-serif;
             font-size: small; font-style: normal; font-variant: normal;
             font-weight: normal; letter-spacing: normal; line-height:
@@ -194,7 +194,7 @@
             white-space: normal; widows: auto; word-spacing: 0px;
             -webkit-text-stroke-width: 0px; display: inline !important;
             float: none; background-color: rgb(255, 255, 255);">Koostage
-            meetodid puu parempoolse suluesituse (</span><code
+            meetodid puu vasakpoolse suluesituse (</span><code
             style="margin: 0px; padding: 0px; font-style: normal;
             font-weight: normal; font-family: monospace; line-height:
             12px; color: rgb(34, 34, 34); font-variant: normal;
@@ -217,7 +217,7 @@
             orphans: auto; text-align: left; text-indent: 0px;
             text-transform: none; white-space: normal; widows: auto;
             word-spacing: 0px; -webkit-text-stroke-width: 0px;
-            background-color: rgb(255, 255, 255);">parsePostfix</code><span
+            background-color: rgb(255, 255, 255);">parsePrefix</code><span
             style="color: rgb(34, 34, 34); font-family: Verdana, Arial,
             sans-serif; font-size: small; font-style: normal;
             font-variant: normal; font-weight: normal; letter-spacing:
@@ -226,7 +226,7 @@
             white-space: normal; widows: auto; word-spacing: 0px;
             -webkit-text-stroke-width: 0px; display: inline !important;
             float: none; background-color: rgb(255, 255, 255);">,
-            tulemuseks puu juurtipp) ning etteantud puu vasakpoolse
+            tulemuseks puu juurtipp) ning etteantud puu parempoolse
             suluesituse leidmiseks stringina (puu juureks on tipp<span
               class="Apple-converted-space">&nbsp; </span></span><code
             style="margin: 0px; padding: 0px; font-style: normal;
@@ -251,7 +251,7 @@
             text-indent: 0px; text-transform: none; white-space: normal;
             widows: auto; word-spacing: 0px; -webkit-text-stroke-width:
             0px; background-color: rgb(255, 255, 255);">
-            leftParentheticRepresentation</code><span style="color:
+            rightParentheticRepresentation</code><span style="color:
             rgb(34, 34, 34); font-family: Verdana, Arial, sans-serif;
             font-size: small; font-style: normal; font-variant: normal;
             font-weight: normal; letter-spacing: normal; line-height:
@@ -320,7 +320,7 @@
             letter-spacing: normal; orphans: auto; text-align: left;
             text-indent: 0px; text-transform: none; white-space: normal;
             widows: auto; word-spacing: 0px; -webkit-text-stroke-width:
-            0px; background-color: rgb(255, 255, 255);">Node</code><span
+            0px; background-color: rgb(255, 255, 255);">TreeNode</code><span
             style="color: rgb(34, 34, 34); font-family: Verdana, Arial,
             sans-serif; font-size: small; font-style: normal;
             font-variant: normal; font-weight: normal; letter-spacing:
@@ -338,7 +338,7 @@
             letter-spacing: normal; orphans: auto; text-align: left;
             text-indent: 0px; text-transform: none; white-space: normal;
             widows: auto; word-spacing: 0px; -webkit-text-stroke-width:
-            0px; background-color: rgb(255, 255, 255);">parsePostfix</code><span
+            0px; background-color: rgb(255, 255, 255);">parsePrefix</code><span
             style="color: rgb(34, 34, 34); font-family: Verdana, Arial,
             sans-serif; font-size: small; font-style: normal;
             font-variant: normal; font-weight: normal; letter-spacing:
@@ -370,17 +370,17 @@
           </span></span><code>import java.util.*;</code><code></code>
         <p><code></code><code> </code><code></code></p>
         <p><code></code><code></code></p>
-        <p><code></code><code>public class Node {</code><code></code></p>
+        <p><code></code><code>public class TreeNode {</code><code></code></p>
         <p><code></code><code> </code><code></code></p>
         <p><code></code><code> </code><code></code></p>
         <p><code></code><code>&nbsp;&nbsp; private String name;</code><code></code></p>
         <p><code></code><code> </code><code></code></p>
-        <p><code></code><code>&nbsp;&nbsp; private Node firstChild;</code><code></code></p>
+        <p><code></code><code>&nbsp;&nbsp; private TreeNode firstChild;</code><code></code></p>
         <p><code></code><code> </code><code></code></p>
-        <p><code></code><code>&nbsp;&nbsp; private Node nextSibling;</code><code></code></p>
+        <p><code></code><code>&nbsp;&nbsp; private TreeNode nextSibling;</code><code></code></p>
         <p><code></code><code> </code><code></code></p>
         <p><code></code><code> </code><code></code></p>
-        <p><code></code><code>&nbsp;&nbsp; Node (String n, Node d, Node
+        <p><code></code><code>&nbsp;&nbsp; TreeNode (String n, TreeNode d, TreeNode
             r) {</code><code></code></p>
         <p><code></code><code> </code><code></code></p>
         <p><code></code><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // TODO!!!
@@ -390,8 +390,8 @@
         <p><code></code><code> </code><code></code></p>
         <p><code></code><code> </code><code></code></p>
         <p><code></code><code> </code><code></code></p>
-        <p><code></code><code>&nbsp;&nbsp; public static Node
-            parsePostfix (String s) {</code><code></code></p>
+        <p><code></code><code>&nbsp;&nbsp; public static TreeNode
+            parsePrefix (String s) {</code><code></code></p>
         <p><code></code><code> </code><code></code></p>
         <p><code></code><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return
             null;&nbsp; // TODO!!! return the root</code><code></code></p>
@@ -400,7 +400,7 @@
         <p><code></code><code> </code><code></code></p>
         <p><code></code><code> </code><code></code></p>
         <p><code></code><code>&nbsp;&nbsp; public String
-            leftParentheticRepresentation() {</code><code></code></p>
+            rightParentheticRepresentation() {</code><code></code></p>
         <p><code></code><code> </code><code></code></p>
         <p><code></code><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return "";
             // TODO!!! return the string without spaces</code><code></code></p>
@@ -412,17 +412,17 @@
             (String[] param) {</code><code></code></p>
         <p><code></code><code> </code><code></code></p>
         <p><code></code><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; String s =
-            "(B1,C)A";</code><code></code></p>
+            "A(B1,C)";</code><code></code></p>
         <p><code></code><code> </code><code></code></p>
         <p><code></code><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Node t =
-            Node.parsePostfix (s);</code><code></code></p>
+            Node.parsePrefix (s);</code><code></code></p>
         <p><code></code><code> </code><code></code></p>
         <p><code></code><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; String v =
-            t.leftParentheticRepresentation();</code><code></code></p>
+            t.rightParentheticRepresentation();</code><code></code></p>
         <p><code></code><code> </code><code></code></p>
         <p><code></code><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            System.out.println (s + " ==&gt; " + v); // (B1,C)A ==&gt;
-            A(B1,C)</code><code></code></p>
+            System.out.println (s + " ==&gt; " + v); // A(B1,C) ==&gt;
+            (B1,C)A</code><code></code></p>
         <p><code></code><code> </code><code></code></p>
         <p><code></code><code>&nbsp;&nbsp; }</code><code></code></p>
         <p><code></code><code> </code><code></code></p>
