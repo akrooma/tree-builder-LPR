@@ -76,8 +76,8 @@ public class TreeNodeTest {
    }
 
    @Test (expected=RuntimeException.class)
-   public void testInputWithBracketsAndComma() {
-      TreeNode t = TreeNode.parsePrefix ("( , ) ");
+   public void testUnbalanced() {
+      TreeNode t = TreeNode.parsePrefix ("A,B)");
    }
 
    @Test (expected=RuntimeException.class)
