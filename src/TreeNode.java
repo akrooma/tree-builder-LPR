@@ -1,7 +1,7 @@
 
 import java.util.*;
 
-public class TreeNode {
+public class TreeNode implements Iterator<TreeNode> {
 
    private String name;
    private TreeNode firstChild;
@@ -29,18 +29,38 @@ public class TreeNode {
 	   return this.firstChild != null;
    }
    
+   public String getName() {
+	   return this.name;
+   }
+   
+   public TreeNode getChild() {
+	   return this.firstChild;
+   }
+   
+   public TreeNode getSibling() {
+	   return this.nextSibling;
+   }
+   
+   public TreeNode next() {
+	      return getSibling();
+   }
+   
+   public boolean hasNext() {
+	      return (getSibling() != null);
+   }
+   
+   public Iterator<TreeNode> children() {
+	      return getChild();
+   }
+   
    public static TreeNode parsePrefix (String s) {
 	   validateInputString(s);
 	   
-	   if (!s.matches("[,()]+")) {
+	   if (!s.contains("(") && !s.contains(",") && !s.contains(")")) {
 		   return new TreeNode(s, null, null);
-	   }
-	   
-	   if (!s.contains(",") && s.matches("[()]+")) {
+	   } else if (!s.contains(",") && s.contains("(") && s.contains(")")) {
 		   return childrenSequence(s);
-	   }
-	   
-	   if (!s.contains("),") && s.matches("[,()]+")) {
+	   } else if (!s.contains("),")) {
 		   return rootOnlyChildren(s);
 	   }
        return null;  // TODO!!! return the root
@@ -48,8 +68,34 @@ public class TreeNode {
 
    public String rightParentheticRepresentation() {
       StringBuffer b = new StringBuffer();
-      // TODO!!! create the result in buffer b
+      
+	  Iterator<TreeNode> child = children();
+	  
+	  if (child != null) {
+		  b.append("(");
+	  }
+	  
+	  while (child != null) {
+		  b.append(((TreeNode) child).rightParentheticRepresentation());
+		  
+		  if (child.hasNext()) {
+			  b.append(",");
+		  } else {
+			  b.append(")");
+		  }
+		  
+		  child = (TreeNode)child.next();
+	  }
+	  
+      b.append(name);
       return b.toString();
+   }
+   
+   public String lpr() {
+	   String result = name;
+	   result += firstChild == null ? "" : "(" + firstChild.lpr() + ")";
+	   result += nextSibling == null ? "" : "," + nextSibling.lpr();
+	   return result;
    }
    
    public static TreeNode childrenSequence(String input) {
@@ -74,7 +120,26 @@ public class TreeNode {
    }
    
    public static TreeNode rootOnlyChildren (String input) {
-	   return null;
+	   TreeNode root = null;
+	   TreeNode current = null;
+	   TreeNode temp = null;
+	   
+	   input = input.replace(")", "");
+	   
+	   String[] tree = input.split("\\(");
+	   String[] children = tree[1].split("\\,");
+	   
+	   temp = new TreeNode(children[0], null, null);
+	   root = new TreeNode(tree[0], temp, null);
+	   current = temp;
+	   
+	   for (int i = 1; i < children.length; i++) {
+		   temp = new TreeNode(children[i], null, null);
+		   current.setNextSibling(temp);
+		   current = temp;
+	   }
+	   
+	   return root;
    }
    
    public static void validateInputString(String input) {
@@ -90,7 +155,7 @@ public class TreeNode {
 		   throw new RuntimeException(input + " contains empty spaces.");
 	   }
 	   
-	   if (input.contains("((") || input.contains("))")) {
+	   if (input.contains("((")) {
 		   throw new RuntimeException(input + " contains double brackets.");
 	   }
 	   
@@ -110,7 +175,7 @@ public class TreeNode {
 	   }
 	   
 	   if (leftParanthesis != rightParanthesis) {
-		   throw new RuntimeException(input + " contains inequal amount of brackets.");
+		   throw new RuntimeException(input + " is unbalanced.");
 	   }
    }
    
@@ -121,38 +186,42 @@ public class TreeNode {
 //      System.out.println (s + " ==> " + v); // A(B1,C) ==> (B1,C)A
 	  
 //	   String s = "A(B(D(G,H),E,F(I)),C(J))";
-	   String s = "A(B(C(D(E))))";
-	   String[] ss = s.split("\\(");
-	   ss[ss.length - 1] = ss[ss.length - 1].replaceAll("[)]", "");
+//	   String s = "A(B,C,D,E,D,F,G)";
+	   String s = "A(B(C(D)))";
+//	   String s = "A(B1,C)";
 	   
-	   
-	   for (String token : ss) {
-		   System.out.println("'"+token+"'");
-	   }
-	   
-//	   String string = "A))))";
+//	   s = s.replace(")", "");
 //	   
-//	   System.out.println("'" + string.replaceAll("[)]", "") + "'");
-	   
-//	   TreeNode root = null;
-//	   TreeNode temp = null;
-//	   TreeNode previous = null;
-//	   TreeNode current = null;
+//	   String[] tree = s.split("\\(");
+//	   String[] children = tree[1].split("\\,");
 //	   
-//	   for (int i = 0; i < ss.length; i++) {
-//		   if (i == 0) {
-//			   root = new TreeNode(ss[i], null, null);
-//			   current = root;
-//			   continue;
-//		   }
-//		   
-//		   if (!ss[i].matches("[,)]")) {
-//			   temp = new TreeNode(ss[i], null, null);
-//			   current.setFirstChild(temp);
-//			   previous = current;
-//			   current = temp;
-//		   }
+//	   for (String token : tree) {
+//		   System.out.println(token);
 //	   }
+//	   
+//	   System.out.println();
+//	   
+//	   for (String token : children) {
+//		   System.out.println(token);
+//	   }
+	   
+//	   TreeNode node = new TreeNode("A", new TreeNode("B", null, new TreeNode("C", new TreeNode("D", null, null),
+//			   new TreeNode("X", new TreeNode("Z", null, new TreeNode("O", null, null)), null))
+//			   ), null);
+	   
+	   TreeNode node = TreeNode.parsePrefix(s);
+	   String sRpr = node.rightParentheticRepresentation();
+	   String sLpr = node.lpr();
+	   
+	   System.out.println(sRpr);
+	   System.out.println(sLpr);
+	   
+//	   String[] ss = s.split("\\(");
+//	   
+//	   for (String token : ss) {
+//		   System.out.println("'"+token+"'");
+//	   }
+
    }
 }
 
