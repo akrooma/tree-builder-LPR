@@ -1,8 +1,7 @@
 
 import java.util.*;
 
-public class TreeNode implements Iterator<TreeNode> {
-
+public class TreeNode  {
    private String name;
    private TreeNode firstChild;
    private TreeNode nextSibling;
@@ -41,16 +40,12 @@ public class TreeNode implements Iterator<TreeNode> {
 	   return this.nextSibling;
    }
    
-   public TreeNode next() {
+   public TreeNode nextSibling() {
 	      return getSibling();
    }
    
-   public boolean hasNext() {
+   public boolean hasNextSibling() {
 	      return (getSibling() != null);
-   }
-   
-   public Iterator<TreeNode> children() {
-	      return getChild();
    }
    
    public static TreeNode parsePrefix (String s) {
@@ -69,30 +64,31 @@ public class TreeNode implements Iterator<TreeNode> {
    public String rightParentheticRepresentation() {
       StringBuffer b = new StringBuffer();
       
-	  Iterator<TreeNode> child = children();
+      TreeNode child = this.getChild();
+      
+      if (child != null) {
+    	  b.append("(");
+      }
+      
+      while (child != null) {
+    	  b.append(child.rightParentheticRepresentation());
+    	  
+    	  if(child.hasNextSibling()) {
+    		  b.append(",");
+    	  } else {
+    		  b.append(")");
+    	  }
+    	  
+    	  child = child.nextSibling();
+      }
 	  
-	  if (child != null) {
-		  b.append("(");
-	  }
-	  
-	  while (child != null) {
-		  b.append(((TreeNode) child).rightParentheticRepresentation());
-		  
-		  if (child.hasNext()) {
-			  b.append(",");
-		  } else {
-			  b.append(")");
-		  }
-		  
-		  child = (TreeNode)child.next();
-	  }
-	  
-      b.append(name);
+      b.append(this.name);
+      
       return b.toString();
    }
    
    public String lpr() {
-	   String result = name;
+	   String result = this.name;
 	   result += firstChild == null ? "" : "(" + firstChild.lpr() + ")";
 	   result += nextSibling == null ? "" : "," + nextSibling.lpr();
 	   return result;
@@ -180,36 +176,17 @@ public class TreeNode implements Iterator<TreeNode> {
    }
    
    public static void main (String[] param) {
-//      String s = "A(B1,C)";
-//      TreeNode t = TreeNode.parsePrefix (s);
-//      String v = t.rightParentheticRepresentation();
-//      System.out.println (s + " ==> " + v); // A(B1,C) ==> (B1,C)A
-	  
 //	   String s = "A(B(D(G,H),E,F(I)),C(J))";
 //	   String s = "A(B,C,D,E,D,F,G)";
-	   String s = "A(B(C(D)))";
+//	   String s = "A(B(C(D)))";
 //	   String s = "A(B1,C)";
+//	   String s = "AA";
 	   
-//	   s = s.replace(")", "");
-//	   
-//	   String[] tree = s.split("\\(");
-//	   String[] children = tree[1].split("\\,");
-//	   
-//	   for (String token : tree) {
-//		   System.out.println(token);
-//	   }
-//	   
-//	   System.out.println();
-//	   
-//	   for (String token : children) {
-//		   System.out.println(token);
-//	   }
+	   TreeNode node = new TreeNode("A", new TreeNode("B", null, new TreeNode("C", new TreeNode("D", null, null),
+			   new TreeNode("X", new TreeNode("Z", null, new TreeNode("O", null, null)), null))
+			   ), null);
 	   
-//	   TreeNode node = new TreeNode("A", new TreeNode("B", null, new TreeNode("C", new TreeNode("D", null, null),
-//			   new TreeNode("X", new TreeNode("Z", null, new TreeNode("O", null, null)), null))
-//			   ), null);
-	   
-	   TreeNode node = TreeNode.parsePrefix(s);
+//	   TreeNode node = TreeNode.parsePrefix(s);
 	   String sRpr = node.rightParentheticRepresentation();
 	   String sLpr = node.lpr();
 	   
