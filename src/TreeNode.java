@@ -115,6 +115,10 @@ public class TreeNode  {
 	   return new TreeNode(null, firstChild, nextSibling);
    }
    
+   /*
+    * Meetod, mis loob puu, millel on üks laps. Lapsel on üks laps jne.
+    * Nt: A(B(C(D(E(F)))))
+    */
    public static TreeNode childrenSequence(String input) {
 	   TreeNode root = null;
 	   TreeNode current = null;
@@ -136,6 +140,10 @@ public class TreeNode  {
 	   return root;
    }
    
+   /*
+    * Meetod, mis loob puu, millel on ainult lapsed ning lastel puuduvad omakorda lapsed.
+    * Nt: A(B,C,D,E,F,G)
+    */
    public static TreeNode rootOnlyChildren (String input) {
 	   TreeNode root = null;
 	   TreeNode current = null;
@@ -159,6 +167,9 @@ public class TreeNode  {
 	   return root;
    }
    
+   /*
+    * Meetod, mis kontrollib parsitavat stringi. 
+    */
    public static void validateInputString(String input) {
 	   if (input.contains("()")) {
 		   throw new RuntimeException(input + " contains empty subtree.");
