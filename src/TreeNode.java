@@ -1,4 +1,3 @@
-
 import java.util.*;
 
 public class TreeNode  {
@@ -57,8 +56,11 @@ public class TreeNode  {
 		   return childrenSequence(s);
 	   } else if (!s.contains("),")) {
 		   return rootOnlyChildren(s);
+	   } else {
+		   return parseFromString(s);
 	   }
-       return null;  // TODO!!! return the root
+	   
+//       return null;  // TODO!!! return the root
    }
 
    public String rightParentheticRepresentation() {
@@ -87,11 +89,30 @@ public class TreeNode  {
       return b.toString();
    }
    
-   public String lpr() {
-	   String result = this.name;
-	   result += firstChild == null ? "" : "(" + firstChild.lpr() + ")";
-	   result += nextSibling == null ? "" : "," + nextSibling.lpr();
-	   return result;
+   public static TreeNode parseFromString(String input) {
+	   TreeNode firstChild = null;
+	   TreeNode nextSibling = null;
+	   int bracketStartIndex = -1;
+	   boolean bracketsOpen = false;
+	   
+	   char[] array = input.toCharArray();
+	   
+	   for (int i = 0; i < array.length; i++) {
+		   switch(array[i]) {
+		   		case '(' :
+		   			bracketStartIndex = i;
+		   			break;
+		   		case ')' :
+		   			
+		   			break;
+		   		case ',' :
+		   			
+		   			break;
+		   			
+		   }
+	   }
+
+	   return new TreeNode(null, firstChild, nextSibling);
    }
    
    public static TreeNode childrenSequence(String input) {
@@ -176,29 +197,40 @@ public class TreeNode  {
    }
    
    public static void main (String[] param) {
+//	   String s = "A(B1,C)";
+//	   TreeNode t = TreeNode.parsePrefix (s);
+//	   String v = t.rightParentheticRepresentation();
+//	   System.out.println (s + " ==> " + v); // A(B1,C) ==> (B1,C)A
+	   
 //	   String s = "A(B(D(G,H),E,F(I)),C(J))";
-//	   String s = "A(B,C,D,E,D,F,G)";
+	   String s = "A(B,C,D,E,D,F,G)";
+//	   String s = "A(B,C(Y,Z,T),D,E,D(J,I),F,G)";
 //	   String s = "A(B(C(D)))";
 //	   String s = "A(B1,C)";
 //	   String s = "AA";
 	   
-	   TreeNode node = new TreeNode("A", new TreeNode("B", null, new TreeNode("C", new TreeNode("D", null, null),
-			   new TreeNode("X", new TreeNode("Z", null, new TreeNode("O", null, null)), null))
-			   ), null);
+//	   TreeNode node = new TreeNode("A", new TreeNode("B", null, new TreeNode("C", new TreeNode("D", null, null),
+//			   new TreeNode("X", new TreeNode("Z", null, new TreeNode("O", null, null)), null))
+//			   ), null);
 	   
-//	   TreeNode node = TreeNode.parsePrefix(s);
+//	   TreeNode node = TreeNode.parseFromString(s);
+	   TreeNode node = TreeNode.parsePrefix(s);
 	   String sRpr = node.rightParentheticRepresentation();
 	   String sLpr = node.lpr();
 	   
-	   System.out.println(sRpr);
-	   System.out.println(sLpr);
-	   
-//	   String[] ss = s.split("\\(");
-//	   
-//	   for (String token : ss) {
-//		   System.out.println("'"+token+"'");
-//	   }
-
+	   System.out.println("String to parse: \t" + s);
+	   System.out.println("Tree's RPR: \t\t" + sRpr);
+	   System.out.println("Tree's LRP: \t\t" + sLpr);
+   }
+   
+   /*
+    * Meetod puu vasakpoolse esituskuju jaoks. Hetkel kontrollmeetod, 
+    * et puu ikka korrektselt tehtud sai.
+    */
+   public String lpr() {
+	   String result = this.name;
+	   result += firstChild == null ? "" : "(" + firstChild.lpr() + ")";
+	   result += nextSibling == null ? "" : "," + nextSibling.lpr();
+	   return result;
    }
 }
-
