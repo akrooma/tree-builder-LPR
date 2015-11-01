@@ -1,5 +1,9 @@
 import java.util.*;
 
+/*
+ * Stringi parsimis meetod ei tööta hetkel korralikult. Meetod toodab lihtsamaid puid, keerukamate
+ * puhul läheb rekursioon n-ö katki. 
+ */
 public class TreeNode  {
    private String name;
    private TreeNode firstChild;
@@ -94,6 +98,7 @@ public class TreeNode  {
 	   TreeNode firstChild = null;
 	   TreeNode nextSibling = null;
 	   int nameEndIndex = 0, bracketsOpened = 0;
+	   boolean bracketsOpen = false;
 	   
 	   char[] array = input.toCharArray();
 	   
@@ -103,12 +108,15 @@ public class TreeNode  {
 		   			if (bracketsOpened == 0) {
 		   				nameEndIndex = i;
 			   			firstChild = TreeNode.parseFromString(input.substring(i+1));
+			   			bracketsOpen = true;
+//			   			name = input.substring(0, nameEndIndex);
 		   			}
 		   			bracketsOpened++;
 		   			break;
 		   		case ')' :
 		   			if (nameEndIndex == 0) {
 		   				nameEndIndex = i;
+//		   				name = input.substring(0, nameEndIndex);
 		   			}
 		   			bracketsOpened--;
 		   			break;
@@ -117,11 +125,12 @@ public class TreeNode  {
 		   				nameEndIndex = i;
 		   				nextSibling = TreeNode.parseFromString(input.substring(i+1));
 		   				break;
-		   			}
+		   			}	
 		   			
-//		   			if (bracketsOpened == 0) {
-//		   				nextSibling = TreeNode.parseFromString(input.substring(i+1));
-//		   			}
+		   			if (bracketsOpen) {
+		   				nextSibling = TreeNode.parseFromString(input.substring(i+1));
+		   			}
+		   
 		   			break;
 		   }
 	   }
@@ -195,10 +204,6 @@ public class TreeNode  {
 	   System.out.println("String to parse: \t" + s);
 	   System.out.println("Tree's RPR: \t\t" + sRpr);
 	   System.out.println("Tree's LRP: \t\t" + sLpr);
-	   
-//	   int i = s.indexOf("(");
-//	   System.out.println(s.substring(i));
-//	   System.out.println(s.substring(i+1));
    }
    
    /*
