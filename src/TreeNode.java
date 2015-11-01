@@ -52,15 +52,9 @@ public class TreeNode  {
 	   
 	   if (!s.contains("(") && !s.contains(",") && !s.contains(")")) {
 		   return new TreeNode(s, null, null);
-	   } else if (!s.contains(",") && s.contains("(") && s.contains(")")) {
-		   return childrenSequence(s);
-	   } else if (!s.contains("),")) {
-		   return rootOnlyChildren(s);
 	   } else {
 		   return parseFromString(s);
 	   }
-	   
-//       return null;  // TODO!!! return the root
    }
 
    public String rightParentheticRepresentation() {
@@ -89,82 +83,52 @@ public class TreeNode  {
       return b.toString();
    }
    
-   public static TreeNode parseFromString(String input) {
+   /*
+    * Meetod, mis parsib stringi põhjal puu. 
+    * Omakorda eraldi meetod parsimiseks on selletõttu, et mul 
+    * olid alguses teised lihtsamad meetodid lihtsamate stringide 
+    * parsimiseks ja lihtsamate puude loomiseks.
+    */
+   private static TreeNode parseFromString(String input) {
+	   String name = null;
 	   TreeNode firstChild = null;
 	   TreeNode nextSibling = null;
-	   int bracketStartIndex = -1;
-	   boolean bracketsOpen = false;
+	   int nameEndIndex = 0, bracketsOpened = 0;
 	   
 	   char[] array = input.toCharArray();
 	   
 	   for (int i = 0; i < array.length; i++) {
 		   switch(array[i]) {
 		   		case '(' :
-		   			bracketStartIndex = i;
+		   			if (bracketsOpened == 0) {
+		   				nameEndIndex = i;
+			   			firstChild = TreeNode.parseFromString(input.substring(i+1));
+		   			}
+		   			bracketsOpened++;
 		   			break;
 		   		case ')' :
-		   			
+		   			if (nameEndIndex == 0) {
+		   				nameEndIndex = i;
+		   			}
+		   			bracketsOpened--;
 		   			break;
 		   		case ',' :
+		   			if (nameEndIndex == 0) {
+		   				nameEndIndex = i;
+		   				nextSibling = TreeNode.parseFromString(input.substring(i+1));
+		   				break;
+		   			}
 		   			
+//		   			if (bracketsOpened == 0) {
+//		   				nextSibling = TreeNode.parseFromString(input.substring(i+1));
+//		   			}
 		   			break;
-		   			
 		   }
 	   }
-
-	   return new TreeNode(null, firstChild, nextSibling);
-   }
-   
-   /*
-    * Meetod, mis loob puu, millel on üks laps. Lapsel on üks laps jne.
-    * Nt: A(B(C(D(E(F)))))
-    */
-   public static TreeNode childrenSequence(String input) {
-	   TreeNode root = null;
-	   TreeNode current = null;
-	   TreeNode temp = null;
 	   
-	   String[] array = input.split("\\(");
-	   array[array.length - 1] = array[array.length - 1].replaceAll("[)]", "");
-
-	   for (int i = 0; i < array.length ; i++) {
-		   if (i == 0) {
-			   root = new TreeNode(array[i], null, null);
-			   current = root;
-		   } else {
-			   temp = new TreeNode(array[i], null, null);
-			   current.setFirstChild(temp);
-			   current = temp;
-		   }
-	   }
-	   return root;
-   }
-   
-   /*
-    * Meetod, mis loob puu, millel on ainult lapsed ning lastel puuduvad omakorda lapsed.
-    * Nt: A(B,C,D,E,F,G)
-    */
-   public static TreeNode rootOnlyChildren (String input) {
-	   TreeNode root = null;
-	   TreeNode current = null;
-	   TreeNode temp = null;
+	   name = input.substring(0, nameEndIndex);
 	   
-	   input = input.replace(")", "");
-	   
-	   String[] tree = input.split("\\(");
-	   String[] children = tree[1].split("\\,");
-	   
-	   temp = new TreeNode(children[0], null, null);
-	   root = new TreeNode(tree[0], temp, null);
-	   current = temp;
-	   
-	   for (int i = 1; i < children.length; i++) {
-		   temp = new TreeNode(children[i], null, null);
-		   current.setNextSibling(temp);
-		   current = temp;
-	   }
-	   
-	   return root;
+	   return new TreeNode(name, firstChild, nextSibling);
    }
    
    /*
@@ -214,10 +178,9 @@ public class TreeNode  {
 //	   System.out.println (s + " ==> " + v); // A(B1,C) ==> (B1,C)A
 	   
 //	   String s = "A(B(D(G,H),E,F(I)),C(J))";
-	   String s = "A(B,C,D,E,D,F,G)";
-//	   String s = "A(B,C(Y,Z,T),D,E,D(J,I),F,G)";
+//	   String s = "A(B,C,D,E,D,F,G)";
+	   String s = "A(B(D,E,X,Y),F)";
 //	   String s = "A(B(C(D)))";
-//	   String s = "A(B1,C)";
 //	   String s = "AA";
 	   
 //	   TreeNode node = new TreeNode("A", new TreeNode("B", null, new TreeNode("C", new TreeNode("D", null, null),
@@ -232,6 +195,10 @@ public class TreeNode  {
 	   System.out.println("String to parse: \t" + s);
 	   System.out.println("Tree's RPR: \t\t" + sRpr);
 	   System.out.println("Tree's LRP: \t\t" + sLpr);
+	   
+//	   int i = s.indexOf("(");
+//	   System.out.println(s.substring(i));
+//	   System.out.println(s.substring(i+1));
    }
    
    /*
