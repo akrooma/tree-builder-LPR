@@ -1,9 +1,5 @@
 import java.util.*;
 
-/*
- * Stringi parsimis meetod ei tööta hetkel korralikult. Meetod toodab lihtsamaid puid, keerukamate
- * puhul läheb rekursioon n-ö katki. 
- */
 public class TreeNode  {
    private String name;
    private TreeNode firstChild;
@@ -98,7 +94,7 @@ public class TreeNode  {
 	   TreeNode firstChild = null;
 	   TreeNode nextSibling = null;
 	   int nameEndIndex = 0, bracketsOpened = 0;
-	   boolean bracketsOpen = false;
+	   boolean decreasedBefore = false;
 	   
 	   char[] array = input.toCharArray();
 	   
@@ -106,36 +102,42 @@ public class TreeNode  {
 		   switch(array[i]) {
 		   		case '(' :
 		   			if (bracketsOpened == 0) {
-		   				nameEndIndex = i;
-			   			firstChild = TreeNode.parseFromString(input.substring(i+1));
-			   			bracketsOpen = true;
-//			   			name = input.substring(0, nameEndIndex);
+		   				if (name == null) {
+			   				name = input.substring(0, i);
+		   				}
+		   				if (nextSibling == null) {
+		   					firstChild = TreeNode.parseFromString(input.substring(i+1));
+		   				}
 		   			}
 		   			bracketsOpened++;
 		   			break;
 		   		case ')' :
-		   			if (nameEndIndex == 0) {
-		   				nameEndIndex = i;
-//		   				name = input.substring(0, nameEndIndex);
+		   			if (name == null) {
+		   				name = input.substring(0, i);
 		   			}
+		   			
+		   			if (bracketsOpened == 0) {
+		   				decreasedBefore = true;
+		   			}
+		   			
 		   			bracketsOpened--;
 		   			break;
 		   		case ',' :
-		   			if (nameEndIndex == 0) {
-		   				nameEndIndex = i;
+		   			if (name == null) {
+		   				name = input.substring(0, i);
 		   				nextSibling = TreeNode.parseFromString(input.substring(i+1));
 		   				break;
-		   			}	
-		   			
-		   			if (bracketsOpen) {
-		   				nextSibling = TreeNode.parseFromString(input.substring(i+1));
 		   			}
-		   
+		   			
+		   			if (bracketsOpened == 0 && nextSibling == null) {
+		   				if (!decreasedBefore) {
+		   					nextSibling = TreeNode.parseFromString(input.substring(i+1));
+		   				}
+		   				
+		   			}
 		   			break;
 		   }
 	   }
-	   
-	   name = input.substring(0, nameEndIndex);
 	   
 	   return new TreeNode(name, firstChild, nextSibling);
    }
@@ -144,6 +146,10 @@ public class TreeNode  {
     * Meetod, mis kontrollib parsitavat stringi. 
     */
    public static void validateInputString(String input) {
+	   if (input.trim().isEmpty()) {
+		   throw new RuntimeException(input + " string is empty.");
+	   }
+	   
 	   if (input.contains("()")) {
 		   throw new RuntimeException(input + " contains empty subtree.");
 	   }
@@ -188,9 +194,11 @@ public class TreeNode  {
 	   
 //	   String s = "A(B(D(G,H),E,F(I)),C(J))";
 //	   String s = "A(B,C,D,E,D,F,G)";
-	   String s = "A(B(D,E,X,Y),F)";
+	   String s = "A(B(D,E(R)),F)";
 //	   String s = "A(B(C(D)))";
 //	   String s = "AA";
+//	   String s = "+(*(-(2,1),4),/(6,3))";
+	   
 	   
 //	   TreeNode node = new TreeNode("A", new TreeNode("B", null, new TreeNode("C", new TreeNode("D", null, null),
 //			   new TreeNode("X", new TreeNode("Z", null, new TreeNode("O", null, null)), null))
@@ -199,11 +207,13 @@ public class TreeNode  {
 //	   TreeNode node = TreeNode.parseFromString(s);
 	   TreeNode node = TreeNode.parsePrefix(s);
 	   String sRpr = node.rightParentheticRepresentation();
-	   String sLpr = node.lpr();
+
 	   
 	   System.out.println("String to parse: \t" + s);
 	   System.out.println("Tree's RPR: \t\t" + sRpr);
-	   System.out.println("Tree's LRP: \t\t" + sLpr);
+	   
+//	   String sLpr = node.lpr();
+//	   System.out.println("Tree's LRP: \t\t" + sLpr);
    }
    
    /*
